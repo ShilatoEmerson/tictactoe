@@ -43,7 +43,44 @@ cd frontend && npm test    # rendering, API integration, win highlight, undo sta
 ```
 
 ## 8. AI tools and prompt summary
-_Fill in before submission:_ tool used, the spec prompt (requirements -> API contract + rules), what was generated, what you changed by hand, which parts you reviewed closely (win/undo/scoreboard logic).
+
+### Approach
+This project was built with **AI-assisted development**. I used Claude (Anthropic) as a pair-programming tool, and I made the technical decisions, ran and tested the application, debugged issues and reviewed the core logic.
+
+### Share of AI involvement
+- **Backend (Node.js/Express): roughly 80% of the code was AI-generated** as a first draft from my requirements. The remaining ~20% is my own work.
+- **Frontend (React):** AI-generated first draft of the components and styling. I tested it in the browser, debugged the touch-emulation flicker, and chose and verified the UI direction.
+- **Everything was run and verified by me**, not accepted on trust.
+
+### My role
+- **Specification and stack decision:** I took the assignment (originally Angular + .NET) and decided to implement it with **React + Node.js/Express**, keeping all functional requirements and the REST contract.
+- **Design choices:** Undo Option A, backend-owned state, in-memory storage, and a CSS-only restyle (neon arcade theme) kept separate from the logic.
+- **Verification:** I ran both servers locally and manually tested every acceptance criterion in the browser: win, draw, reset, undo in both modes, scoreboard, computer mode. I confirmed the REST calls in the Network tab and ran the backend and frontend test suites.
+- **Debugging:** I resolved a port conflict (`EADDRINUSE` on 4000) and a cell flicker seen in touch emulation, fixed by scoping hover styles to devices with a mouse.
+
+### Prompts (summary)
+1. *Spec and stack:* Shared the full assignment document and asked for one change: "Frontend: React.js, Backend: Node.js/Express. Need full steps from scratch to create the project."
+2. *Understanding:* Asked how the solution works for an interview, with likely panel questions.
+3. *Code review:* Asked whether the React app uses functional components and the latest form.
+4. *Frontend walkthrough:* Asked for a line-by-line flow of the whole frontend code.
+5. *Debugging:* Pasted the `EADDRINUSE` port 4000 error and asked for a fix.
+6. *Requirements check:* Asked whether every requirement was met, then ran the suggested smoke test myself.
+7. *UI direction:* Asked whether to restyle the UI to be more gaming, and chose the neon arcade direction.
+8. *Bug report:* Reported a square flickering in the phone emulator and applied the CSS fix.
+9. *Delivery:* Asked for steps to push to GitHub and for help drafting this section.
+
+### Parts I reviewed most carefully
+- **Win/draw detection:** all 8 lines, with the win checked before the draw.
+- **Undo:** state is rebuilt from the move list; 1 move in two-player mode, 2 in computer mode.
+- **Scoreboard:** a `resultRecorded` flag gives one update per game; Reset Game leaves it unchanged; Undo is disabled after completion.
+- **Move validation:** invalid moves return typed errors and never change the turn.
+- **Computer move priority:** win, block, centre, corner, any.
+
+### Assumptions and trade-offs
+- Undo Option A (disabled after completion) keeps the scoreboard final.
+- The backend is the source of truth; the frontend renders returned state only.
+- The computer follows the specified priority order rather than minimax.
+- Storage is in-memory, so data is lost on restart.
 
 ## 9. Design decisions
 - Rules live in pure functions (`gameLogic.js`), separate from Express and storage -> unit-testable.
