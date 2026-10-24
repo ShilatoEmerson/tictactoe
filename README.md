@@ -99,3 +99,12 @@ In-memory only (data lost on restart, single server instance); no auth; no webso
 
 ## 12. Future improvements
 SQLite persistence, minimax AI, Option B undo with scoreboard rollback, Docker compose, e2e tests (Playwright).
+
+## 13. Look and feel
+
+<img width="1047" height="616" alt="image" src="https://github.com/user-attachments/assets/94e809a9-b16b-4004-89f0-8c84c6f1f6a3" />
+<img width="1015" height="598" alt="image" src="https://github.com/user-attachments/assets/e621f33a-55db-475b-9463-a73f3a9ddbdd" />
+<img width="1014" height="615" alt="image" src="https://github.com/user-attachments/assets/daf09341-4d32-4d0c-af12-00c1913bfbb6" />
+
+
+
