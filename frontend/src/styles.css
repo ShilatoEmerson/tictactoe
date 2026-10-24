@@ -29,7 +29,7 @@ body {
 .page {
   max-width: 980px;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: clamp(24px, 8vh, 96px) 16px 48px;
 }
 header {
   display: flex;
@@ -281,4 +281,15 @@ button {
   .cell:not(:disabled):hover {
     background: #151c3d;
   }
+}
+
+.status,
+.cell,
+.score dd {
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    Roboto,
+    sans-serif;
 }
